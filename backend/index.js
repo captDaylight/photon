@@ -1,17 +1,14 @@
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
-const { generatePatientData } = require('./helpers/generateMockData');
+const { generateMockData } = require('./helpers/generateMockData');
 
 const app = express();
 app.use(express.json());
 const port = 4000;
 
-const mockPatients = generatePatientData(10);
+const mockPatients = generateMockData(10);
 
-const database = {
-  patients: mockPatients,
-  prescriptions: {},
-};
+const database = generateMockData(10);
 
 app.get('/', (req, res) => {
   res.json({
@@ -75,6 +72,7 @@ app.post('/prescriptions', (req, res) => {
     patientId,
     medication,
     dosage,
+    status: 'PENDING',
   };
   res.json(database.prescriptions[id]);
 });
