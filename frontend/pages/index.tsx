@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import { useQuery } from '@apollo/client';
-import { graphql } from '../src/gql';
+import { graphql } from '../gql';
 
 const PATIENT_QUERY = graphql(/* GraphQL */ `
-  query {
+  query Patients {
     patients {
       id
       firstName
@@ -14,12 +14,17 @@ const PATIENT_QUERY = graphql(/* GraphQL */ `
 
 const Home: NextPage = () => {
   const { data, loading, error } = useQuery(PATIENT_QUERY);
-  
-  return <div>
-    {data && (
-      data.patients.map((patient) => (
-    )}
-  </div>;
+
+  return (
+    <div>
+      {data &&
+        data.patients.map((patient) => (
+          <li key={patient.id}>
+            {patient.firstName} {patient.lastName}
+          </li>
+        ))}
+    </div>
+  );
 };
 
 export default Home;

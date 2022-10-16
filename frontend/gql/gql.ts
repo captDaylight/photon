@@ -2,7 +2,12 @@
 import * as types from './graphql';
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 
-const documents = [];
+const documents = {
+    "\n  query Patients {\n    patients {\n      id\n      firstName\n      lastName\n    }\n  }\n": types.PatientsDocument,
+};
+
+export function graphql(source: "\n  query Patients {\n    patients {\n      id\n      firstName\n      lastName\n    }\n  }\n"): (typeof documents)["\n  query Patients {\n    patients {\n      id\n      firstName\n      lastName\n    }\n  }\n"];
+
 export function graphql(source: string): unknown;
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

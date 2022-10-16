@@ -2,7 +2,7 @@ import { createServer, GraphQLYogaError } from '@graphql-yoga/node';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 import axios from 'axios';
-import { Resolvers } from '../../src/gql/graphql';
+import { Resolvers } from '../../gql/graphql';
 
 const API_URL = 'http://localhost:4000';
 

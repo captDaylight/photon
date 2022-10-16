@@ -1,7 +1,0 @@
-query {
-  patients {
-    id
-    firstName
-    lastName
-  }
-}
