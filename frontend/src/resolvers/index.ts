@@ -27,6 +27,17 @@ export const resolvers: Resolvers = {
 
       return prescriptions || [];
     },
+    prescription: async (_: any, { id }) => {
+      const { data: prescription } = await axios.get(
+        `${API_URL}/prescriptions/${id}`
+      );
+
+      if (!prescription) {
+        throw new GraphQLYogaError(`Prescription with ${id} not found.`);
+      }
+
+      return prescription;
+    },
   },
   Patient: {
     prescriptions: async (patient) => {
@@ -35,6 +46,15 @@ export const resolvers: Resolvers = {
       );
 
       return prescriptions || [];
+    },
+  },
+  Prescription: {
+    patient: async (prescription) => {
+      const { data: patient } = await axios.get(
+        `${API_URL}/patients/${prescription.patientId}`
+      );
+
+      return patient;
     },
   },
 };

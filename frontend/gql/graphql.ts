@@ -38,6 +38,7 @@ export type Prescription = {
   id: Scalars['ID'];
   medication?: Maybe<Scalars['String']>;
   patient?: Maybe<Patient>;
+  patientId: Scalars['ID'];
   status?: Maybe<PrescriptionStatus>;
 };
 
@@ -51,10 +52,15 @@ export type Query = {
   __typename?: 'Query';
   patient?: Maybe<Patient>;
   patients: Array<Patient>;
+  prescription?: Maybe<Prescription>;
   prescriptions: Array<Prescription>;
 };
 
 export type QueryPatientArgs = {
+  id: Scalars['ID'];
+};
+
+export type QueryPrescriptionArgs = {
   id: Scalars['ID'];
 };
 
@@ -255,6 +261,7 @@ export type PrescriptionResolvers<
     ContextType
   >;
   patient?: Resolver<Maybe<ResolversTypes['Patient']>, ParentType, ContextType>;
+  patientId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   status?: Resolver<
     Maybe<ResolversTypes['PrescriptionStatus']>,
     ParentType,
@@ -277,6 +284,12 @@ export type QueryResolvers<
     Array<ResolversTypes['Patient']>,
     ParentType,
     ContextType
+  >;
+  prescription?: Resolver<
+    Maybe<ResolversTypes['Prescription']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryPrescriptionArgs, 'id'>
   >;
   prescriptions?: Resolver<
     Array<ResolversTypes['Prescription']>,

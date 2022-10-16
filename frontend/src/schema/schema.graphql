@@ -13,6 +13,7 @@ enum PrescriptionStatus {
 
 type Prescription {
   id: ID!
+  patientId: ID!
   patient: Patient
   medication: String
   dosage: String
@@ -23,4 +24,5 @@ type Query {
   patients: [Patient!]!
   patient(id: ID!): Patient
   prescriptions: [Prescription!]!
+  prescription(id: ID!): Prescription
 }
