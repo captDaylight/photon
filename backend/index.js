@@ -30,9 +30,11 @@ app.get('/patients/:id', (req, res) => {
 });
 
 app.get('/patients/:id/prescriptions', (req, res) => {
-  const prescriptions = database.prescriptions.filter(
+  const prescriptions = Object.values(database.prescriptions).filter(
     (prescription) => prescription.patientId === req.params.id
   );
+
+  res.json(prescriptions || []);
 });
 
 app.post('/patients', (req, res) => {

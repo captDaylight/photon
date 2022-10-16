@@ -2,9 +2,25 @@ type Patient {
   id: ID!
   firstName: String
   lastName: String
+  prescriptions: [Prescription!]!
+}
+
+enum PrescriptionStatus {
+  PENDING
+  IN_PROGRESS
+  FILLED
+}
+
+type Prescription {
+  id: ID!
+  patient: Patient
+  medication: String
+  dosage: String
+  status: PrescriptionStatus
 }
 
 type Query {
   patients: [Patient!]!
   patient(id: ID!): Patient
+  prescriptions: [Prescription!]!
 }

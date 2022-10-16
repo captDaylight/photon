@@ -15,6 +15,48 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+};
+
+export type Patient = {
+  __typename?: 'Patient';
+  firstName?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  lastName?: Maybe<Scalars['String']>;
+  prescriptions: Array<Prescription>;
+};
+
+export type Prescription = {
+  __typename?: 'Prescription';
+  dosage?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  medication?: Maybe<Scalars['String']>;
+  patient?: Maybe<Patient>;
+  status?: Maybe<PrescriptionStatus>;
+};
+
+export enum PrescriptionStatus {
+  Filled = 'FILLED',
+  InProgress = 'IN_PROGRESS',
+  Pending = 'PENDING',
+}
+
+export type Query = {
+  __typename?: 'Query';
+  patient?: Maybe<Patient>;
+  patients: Array<Patient>;
+  prescriptions: Array<Prescription>;
+};
+
+export type QueryPatientArgs = {
+  id: Scalars['ID'];
+};
 
 export type PatientsQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -55,31 +97,6 @@ export const PatientsDocument = {
     },
   ],
 } as unknown as DocumentNode<PatientsQuery, PatientsQueryVariables>;
-/** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-};
-
-export type Patient = {
-  __typename?: 'Patient';
-  firstName?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  lastName?: Maybe<Scalars['String']>;
-};
-
-export type Query = {
-  __typename?: 'Query';
-  patient?: Maybe<Patient>;
-  patients: Array<Patient>;
-};
-
-export type QueryPatientArgs = {
-  id: Scalars['ID'];
-};
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -191,6 +208,8 @@ export type ResolversTypes = {
   Patient: ResolverTypeWrapper<Patient>;
   String: ResolverTypeWrapper<Scalars['String']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Prescription: ResolverTypeWrapper<Prescription>;
+  PrescriptionStatus: PrescriptionStatus;
   Query: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
@@ -200,6 +219,7 @@ export type ResolversParentTypes = {
   Patient: Patient;
   String: Scalars['String'];
   ID: Scalars['ID'];
+  Prescription: Prescription;
   Query: {};
   Boolean: Scalars['Boolean'];
 };
@@ -215,6 +235,31 @@ export type PatientResolvers<
   >;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  prescriptions?: Resolver<
+    Array<ResolversTypes['Prescription']>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PrescriptionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Prescription'] = ResolversParentTypes['Prescription']
+> = {
+  dosage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  medication?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  patient?: Resolver<Maybe<ResolversTypes['Patient']>, ParentType, ContextType>;
+  status?: Resolver<
+    Maybe<ResolversTypes['PrescriptionStatus']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -233,9 +278,15 @@ export type QueryResolvers<
     ParentType,
     ContextType
   >;
+  prescriptions?: Resolver<
+    Array<ResolversTypes['Prescription']>,
+    ParentType,
+    ContextType
+  >;
 };
 
 export type Resolvers<ContextType = any> = {
   Patient?: PatientResolvers<ContextType>;
+  Prescription?: PrescriptionResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 };

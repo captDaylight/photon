@@ -37,20 +37,29 @@ const generateMockData = (amountOfPatients) => {
     return acc;
   }, {});
 
-  // for each patient, generate a prescription
+  // for each patient, generate random prescriptions
   const prescriptions = Object.keys(patients).reduce((acc, patientId) => {
-    const id = uuidv4();
-    acc[id] = {
-      id,
-      patientId,
-      medication: faker.helpers.arrayElement(drugNames),
-      dosage: `${faker.random.numeric(3)} ${faker.helpers.arrayElement([
-        'mg',
-        'g',
-        'ml',
-      ])}`,
-      status: faker.helpers.arrayElement(['PENDING', 'IN_PROGRESS', 'FILLED']),
-    };
+    const randomNumber = Math.floor(Math.random() * 10);
+
+    for (let i = 0; i < randomNumber; i++) {
+      const id = uuidv4();
+      acc[id] = {
+        id,
+        patientId,
+        medication: faker.helpers.arrayElement(drugNames), // lol, this is probably so unrealistic 🤷‍♂️
+        dosage: `${faker.random.numeric(3)} ${faker.helpers.arrayElement([
+          'mg',
+          'g',
+          'ml',
+        ])}`,
+        status: faker.helpers.arrayElement([
+          'PENDING',
+          'IN_PROGRESS',
+          'FILLED',
+        ]),
+      };
+    }
+
     return acc;
   }, {});
 
