@@ -2,6 +2,7 @@ import { createServer, GraphQLYogaError } from '@graphql-yoga/node';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 import axios from 'axios';
+import { Resolvers } from '../../src/gql/graphql';
 
 const API_URL = 'http://localhost:4000';
 
@@ -12,21 +13,14 @@ const typeDefs = readFileSync(
   }
 );
 
-type Patient = {
-  id: string;
-  firstName: string;
-  lastName: string;
-};
-
-type PatientResponse = {
-  data: Patient;
-};
-const resolvers = {
+const resolvers: Resolvers = {
   Query: {
-    patient: async (_, { id }) => {
-      const { data: patient } = await axios.get<PatientResponse>(
-        `${API_URL}/patients/${id}`
-      );
+    patients: async () => {
+      const { data: patients } = await axios.get(`${API_URL}/patients`);
+      return patients || [];
+    },
+    patient: async (_: any, { id }) => {
+      const { data: patient } = await axios.get(`${API_URL}/patients/${id}`);
 
       if (!patient) {
         throw new GraphQLYogaError(`Patient with ${id} not found.`);
