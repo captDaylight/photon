@@ -24,6 +24,29 @@ export type Scalars = {
   Float: number;
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  createPatient?: Maybe<Patient>;
+  createPrescription?: Maybe<Prescription>;
+  updatePrescription?: Maybe<Prescription>;
+};
+
+export type MutationCreatePatientArgs = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+};
+
+export type MutationCreatePrescriptionArgs = {
+  dosage: Scalars['String'];
+  medication: Scalars['String'];
+  patientId: Scalars['ID'];
+};
+
+export type MutationUpdatePrescriptionArgs = {
+  id: Scalars['ID'];
+  status: PrescriptionStatus;
+};
+
 export type Patient = {
   __typename?: 'Patient';
   firstName?: Maybe<Scalars['String']>;
@@ -211,9 +234,10 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Patient: ResolverTypeWrapper<Patient>;
+  Mutation: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Patient: ResolverTypeWrapper<Patient>;
   Prescription: ResolverTypeWrapper<Prescription>;
   PrescriptionStatus: PrescriptionStatus;
   Query: ResolverTypeWrapper<{}>;
@@ -222,12 +246,40 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Patient: Patient;
+  Mutation: {};
   String: Scalars['String'];
   ID: Scalars['ID'];
+  Patient: Patient;
   Prescription: Prescription;
   Query: {};
   Boolean: Scalars['Boolean'];
+};
+
+export type MutationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
+> = {
+  createPatient?: Resolver<
+    Maybe<ResolversTypes['Patient']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreatePatientArgs, 'firstName' | 'lastName'>
+  >;
+  createPrescription?: Resolver<
+    Maybe<ResolversTypes['Prescription']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationCreatePrescriptionArgs,
+      'dosage' | 'medication' | 'patientId'
+    >
+  >;
+  updatePrescription?: Resolver<
+    Maybe<ResolversTypes['Prescription']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdatePrescriptionArgs, 'id' | 'status'>
+  >;
 };
 
 export type PatientResolvers<
@@ -299,6 +351,7 @@ export type QueryResolvers<
 };
 
 export type Resolvers<ContextType = any> = {
+  Mutation?: MutationResolvers<ContextType>;
   Patient?: PatientResolvers<ContextType>;
   Prescription?: PrescriptionResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

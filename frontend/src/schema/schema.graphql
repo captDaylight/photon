@@ -26,3 +26,13 @@ type Query {
   prescriptions: [Prescription!]!
   prescription(id: ID!): Prescription
 }
+
+type Mutation {
+  createPatient(firstName: String!, lastName: String!): Patient
+  createPrescription(
+    patientId: ID!
+    medication: String!
+    dosage: String!
+  ): Prescription
+  updatePrescription(id: ID!, status: PrescriptionStatus!): Prescription
+}

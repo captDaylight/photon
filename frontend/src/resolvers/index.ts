@@ -4,7 +4,6 @@ import { Resolvers } from '../../gql/graphql';
 import { API_URL } from '../constants';
 
 export const resolvers: Resolvers = {
-  // Mutations: {},
   Query: {
     patients: async () => {
       const { data: patients } = await axios.get(`${API_URL}/patients`);
@@ -34,6 +33,54 @@ export const resolvers: Resolvers = {
 
       if (!prescription) {
         throw new GraphQLYogaError(`Prescription with ${id} not found.`);
+      }
+
+      return prescription;
+    },
+  },
+  Mutation: {
+    createPatient: async (_: any, { firstName, lastName }) => {
+      const { data: patient } = await axios.post(`${API_URL}/patients`, {
+        firstName,
+        lastName,
+      });
+
+      if (!patient) {
+        throw new GraphQLYogaError(
+          `Failed to create patient ${firstName} ${lastName}`
+        );
+      }
+
+      return patient;
+    },
+    createPrescription: async (_: any, { patientId, medication, dosage }) => {
+      const { data: prescription } = await axios.post(
+        `${API_URL}/prescriptions`,
+        {
+          patientId,
+          medication,
+          dosage,
+        }
+      );
+
+      if (!prescription) {
+        throw new GraphQLYogaError(
+          `Failed to create prescription for patient ${patientId}`
+        );
+      }
+
+      return prescription;
+    },
+    updatePrescription: async (_: any, { id, status }) => {
+      const { data: prescription } = await axios.patch(
+        `${API_URL}/prescriptions/${id}`,
+        {
+          status,
+        }
+      );
+
+      if (!prescription) {
+        throw new GraphQLYogaError(`Failed to update prescription ${id}`);
       }
 
       return prescription;

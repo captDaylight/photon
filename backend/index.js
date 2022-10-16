@@ -65,6 +65,7 @@ app.get('/prescriptions/:id', (req, res) => {
 
 app.post('/prescriptions', (req, res) => {
   const { patientId, medication, dosage } = req.body || {};
+
   if (!patientId || !medication || !dosage) {
     res.status(400).send('Error: Missing required fields');
   }
@@ -79,7 +80,16 @@ app.post('/prescriptions', (req, res) => {
   res.json(database.prescriptions[id]);
 });
 
-app.patch('/prescriptions/:id', (req, res) => {});
+app.patch('/prescriptions/:id', (req, res) => {
+  const { status } = req.body || {};
+
+  if (!status) {
+    res.status(400).send('Error: Missing required fields');
+  }
+
+  database.prescriptions[req.params.id].status = status;
+  res.json(database.prescriptions[req.params.id]);
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
