@@ -1,7 +1,7 @@
 type Patient {
   id: ID!
-  firstName: String
-  lastName: String
+  firstName: String!
+  lastName: String!
   prescriptions: [Prescription!]!
 }
 
@@ -14,10 +14,10 @@ enum PrescriptionStatus {
 type Prescription {
   id: ID!
   patientId: ID!
-  patient: Patient
-  medication: String
-  dosage: String
-  status: PrescriptionStatus
+  patient: Patient!
+  medication: String!
+  dosage: String!
+  status: PrescriptionStatus!
 }
 
 type Query {

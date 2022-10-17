@@ -41,12 +41,12 @@ const Patient: NextPage = () => {
           </Heading>
 
           <RedTable headers={['Medication', 'Dosage', 'Status', 'Identifier']}>
-            {data.patient.prescriptions.map((prescriptions) => (
-              <Tr key={prescriptions.id}>
-                <Td>{prescriptions.medication}</Td>
-                <Td>{prescriptions.dosage}</Td>
-                <Td>{prescriptions.status}</Td>
-                <Td>{prescriptions.medication}</Td>
+            {data.patient.prescriptions.map((prescription) => (
+              <Tr key={prescription.id}>
+                <Td>{prescription.medication}</Td>
+                <Td>{prescription.dosage}</Td>
+                <Td>{prescription.status}</Td>
+                <Td>{prescription.medication}</Td>
               </Tr>
             ))}
           </RedTable>

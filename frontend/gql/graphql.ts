@@ -49,20 +49,20 @@ export type MutationUpdatePrescriptionArgs = {
 
 export type Patient = {
   __typename?: 'Patient';
-  firstName?: Maybe<Scalars['String']>;
+  firstName: Scalars['String'];
   id: Scalars['ID'];
-  lastName?: Maybe<Scalars['String']>;
+  lastName: Scalars['String'];
   prescriptions: Array<Prescription>;
 };
 
 export type Prescription = {
   __typename?: 'Prescription';
-  dosage?: Maybe<Scalars['String']>;
+  dosage: Scalars['String'];
   id: Scalars['ID'];
-  medication?: Maybe<Scalars['String']>;
-  patient?: Maybe<Patient>;
+  medication: Scalars['String'];
+  patient: Patient;
   patientId: Scalars['ID'];
-  status?: Maybe<PrescriptionStatus>;
+  status: PrescriptionStatus;
 };
 
 export enum PrescriptionStatus {
@@ -96,27 +96,63 @@ export type PatientQueryQuery = {
   patient?: {
     __typename?: 'Patient';
     id: string;
-    firstName?: string | null;
-    lastName?: string | null;
+    firstName: string;
+    lastName: string;
     prescriptions: Array<{
       __typename?: 'Prescription';
       id: string;
-      medication?: string | null;
-      dosage?: string | null;
-      status?: PrescriptionStatus | null;
+      medication: string;
+      dosage: string;
+      status: PrescriptionStatus;
     }>;
   } | null;
 };
 
-export type PatientsQueryVariables = Exact<{ [key: string]: never }>;
+export type PrescriptionsQueryQueryVariables = Exact<{ [key: string]: never }>;
 
-export type PatientsQuery = {
+export type PrescriptionsQueryQuery = {
+  __typename?: 'Query';
+  prescriptions: Array<{
+    __typename?: 'Prescription';
+    id: string;
+    medication: string;
+    status: PrescriptionStatus;
+    dosage: string;
+    patient: { __typename?: 'Patient'; id: string };
+  }>;
+};
+
+export type PrescriptionQueryQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type PrescriptionQueryQuery = {
+  __typename?: 'Query';
+  prescription?: {
+    __typename?: 'Prescription';
+    id: string;
+    patientId: string;
+    medication: string;
+    dosage: string;
+    status: PrescriptionStatus;
+    patient: {
+      __typename?: 'Patient';
+      id: string;
+      firstName: string;
+      lastName: string;
+    };
+  } | null;
+};
+
+export type PatientsQueryQueryVariables = Exact<{ [key: string]: never }>;
+
+export type PatientsQueryQuery = {
   __typename?: 'Query';
   patients: Array<{
     __typename?: 'Patient';
     id: string;
-    firstName?: string | null;
-    lastName?: string | null;
+    firstName: string;
+    lastName: string;
   }>;
 };
 
@@ -193,13 +229,125 @@ export const PatientQueryDocument = {
     },
   ],
 } as unknown as DocumentNode<PatientQueryQuery, PatientQueryQueryVariables>;
-export const PatientsDocument = {
+export const PrescriptionsQueryDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'Patients' },
+      name: { kind: 'Name', value: 'PrescriptionsQuery' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'prescriptions' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'medication' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dosage' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'patient' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  PrescriptionsQueryQuery,
+  PrescriptionsQueryQueryVariables
+>;
+export const PrescriptionQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'PrescriptionQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'prescription' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'patientId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'medication' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dosage' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'patient' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'firstName' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'lastName' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  PrescriptionQueryQuery,
+  PrescriptionQueryQueryVariables
+>;
+export const PatientsQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'PatientsQuery' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -219,7 +367,7 @@ export const PatientsDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<PatientsQuery, PatientsQueryVariables>;
+} as unknown as DocumentNode<PatientsQueryQuery, PatientsQueryQueryVariables>;
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -380,13 +528,9 @@ export type PatientResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Patient'] = ResolversParentTypes['Patient']
 > = {
-  firstName?: Resolver<
-    Maybe<ResolversTypes['String']>,
-    ParentType,
-    ContextType
-  >;
+  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   prescriptions?: Resolver<
     Array<ResolversTypes['Prescription']>,
     ParentType,
@@ -399,17 +543,13 @@ export type PrescriptionResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Prescription'] = ResolversParentTypes['Prescription']
 > = {
-  dosage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  dosage?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  medication?: Resolver<
-    Maybe<ResolversTypes['String']>,
-    ParentType,
-    ContextType
-  >;
-  patient?: Resolver<Maybe<ResolversTypes['Patient']>, ParentType, ContextType>;
+  medication?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  patient?: Resolver<ResolversTypes['Patient'], ParentType, ContextType>;
   patientId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   status?: Resolver<
-    Maybe<ResolversTypes['PrescriptionStatus']>,
+    ResolversTypes['PrescriptionStatus'],
     ParentType,
     ContextType
   >;

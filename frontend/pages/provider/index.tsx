@@ -1,22 +1,13 @@
 import type { NextPage } from 'next';
 import { useQuery } from '@apollo/client';
 import { graphql } from '../../gql';
-import {
-  Heading,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from '@chakra-ui/react';
+import { Heading, Td, Tr } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import RedTable from '../../src/components/RedTable';
 
 const PATIENTS_QUERY = graphql(/* GraphQL */ `
-  query Patients {
+  query PatientsQuery {
     patients {
       id
       firstName
