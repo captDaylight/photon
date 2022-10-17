@@ -77,7 +77,7 @@ const Patient: NextPage = () => {
       <RightDrawer
         isOpen={isOpen}
         onClose={onClose}
-        ref={btnRef}
+        btnRef={btnRef}
         header={`Add New Prescription for ${data?.patient?.firstName} ${data?.patient?.lastName}`}
       >
         <p>Form goes here</p>

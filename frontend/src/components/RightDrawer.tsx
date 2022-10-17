@@ -11,7 +11,7 @@ import { ReactNode, RefObject } from 'react';
 type RightDrawerProps = {
   isOpen: boolean;
   onClose: () => void;
-  ref: RefObject<HTMLButtonElement>;
+  btnRef: RefObject<HTMLButtonElement>;
   header?: string;
   children: ReactNode;
 };
@@ -19,7 +19,7 @@ type RightDrawerProps = {
 const RightDrawer = ({
   isOpen,
   onClose,
-  ref,
+  btnRef,
   header,
   children,
 }: RightDrawerProps) => (
@@ -27,7 +27,8 @@ const RightDrawer = ({
     isOpen={isOpen}
     placement="right"
     onClose={onClose}
-    finalFocusRef={ref}
+    finalFocusRef={btnRef}
+    size="md"
   >
     <DrawerOverlay />
     <DrawerContent>
