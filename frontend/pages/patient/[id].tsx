@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { Heading, Tr, Td } from '@chakra-ui/react';
 import type { NextPage } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { graphql } from '../../gql';
 import Loading from '../../src/components/Loading';
@@ -42,13 +44,22 @@ const Patient: NextPage = () => {
             Prescriptions
           </Heading>
 
-          <RedTable headers={['Medication', 'Dosage', 'Status', 'Identifier']}>
+          <RedTable
+            headers={['Medication', 'Dosage', 'Status', 'Identifier', '']}
+          >
             {data.patient.prescriptions.map((prescription) => (
               <Tr key={prescription.id}>
                 <Td>{prescription.medication}</Td>
                 <Td>{prescription.dosage}</Td>
                 <Td>{prescription.status}</Td>
                 <Td>{prescription.medication}</Td>
+                <Td>
+                  <Link href={`/prescription/${prescription.id}`}>
+                    <a>
+                      <ExternalLinkIcon />
+                    </a>
+                  </Link>
+                </Td>
               </Tr>
             ))}
           </RedTable>
