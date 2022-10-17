@@ -5,6 +5,7 @@ import { Heading, Td, Tr } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import RedTable from '../../src/components/RedTable';
+import Loading from '../../src/components/Loading';
 
 const PATIENTS_QUERY = graphql(/* GraphQL */ `
   query PatientsQuery {
@@ -17,7 +18,7 @@ const PATIENTS_QUERY = graphql(/* GraphQL */ `
 `);
 
 const Home: NextPage = () => {
-  const { data } = useQuery(PATIENTS_QUERY);
+  const { data, loading } = useQuery(PATIENTS_QUERY);
 
   return (
     <>
@@ -25,9 +26,10 @@ const Home: NextPage = () => {
       <Heading size="md" pb={4}>
         Patients
       </Heading>
-      <RedTable headers={['First Name', 'Last Name', 'Identifier', '']}>
-        {data &&
-          data.patients.map((patient) => (
+      {loading && <Loading />}
+      {data && (
+        <RedTable headers={['First Name', 'Last Name', 'Identifier', '']}>
+          {data.patients.map((patient) => (
             <Tr key={patient.id}>
               <Td>{patient.firstName}</Td>
               <Td>{patient.lastName}</Td>
@@ -41,7 +43,8 @@ const Home: NextPage = () => {
               </Td>
             </Tr>
           ))}
-      </RedTable>
+        </RedTable>
+      )}
     </>
   );
 };

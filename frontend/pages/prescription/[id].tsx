@@ -5,6 +5,7 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { graphql } from '../../gql';
+import Loading from '../../src/components/Loading';
 
 const PRESCRIPTION_QUERY = graphql(/* GraphQL */ `
   query PrescriptionQuery($id: ID!) {
@@ -26,12 +27,14 @@ const PRESCRIPTION_QUERY = graphql(/* GraphQL */ `
 const Patient: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useQuery(PRESCRIPTION_QUERY, {
+  const { data, loading } = useQuery(PRESCRIPTION_QUERY, {
     variables: { id: id as string },
   });
 
   return (
     <>
+      {loading && <Loading />}
+
       {data?.prescription && (
         <>
           <Heading pb={10}>

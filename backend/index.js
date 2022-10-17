@@ -21,7 +21,6 @@ app.get('/patients', (req, res) => {
 });
 
 app.get('/patients/:id', (req, res) => {
-  console.log(database.patients, req.params.id);
   const value = database.patients[req.params.id];
   if (value) {
     res.json(value);

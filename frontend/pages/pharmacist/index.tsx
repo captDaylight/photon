@@ -4,6 +4,7 @@ import { Heading, Td, Tr } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { graphql } from '../../gql';
+import Loading from '../../src/components/Loading';
 import RedTable from '../../src/components/RedTable';
 
 const PRESCRIPTIONS_QUERY = graphql(/* GraphQL */ `
@@ -22,17 +23,17 @@ const PRESCRIPTIONS_QUERY = graphql(/* GraphQL */ `
 `);
 
 const Pharmacist: NextPage = () => {
-  const { data } = useQuery(PRESCRIPTIONS_QUERY);
+  const { data, loading } = useQuery(PRESCRIPTIONS_QUERY);
 
   return (
     <>
-      {data?.prescriptions && (
-        <>
-          <Heading pb={10}>Pharmacist Portal</Heading>
-          <Heading size="md" pb={4}>
-            Prescriptions
-          </Heading>
-
+      <>
+        <Heading pb={10}>Pharmacist Portal</Heading>
+        <Heading size="md" pb={4}>
+          Prescriptions
+        </Heading>
+        {loading && <Loading />}
+        {data?.prescriptions && (
           <RedTable
             headers={[
               'Medication',
@@ -60,8 +61,8 @@ const Pharmacist: NextPage = () => {
               </Tr>
             ))}
           </RedTable>
-        </>
-      )}
+        )}
+      </>
     </>
   );
 };

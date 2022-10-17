@@ -3,6 +3,7 @@ import { Heading, Tr, Td } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { graphql } from '../../gql';
+import Loading from '../../src/components/Loading';
 import RedTable from '../../src/components/RedTable';
 
 const PATIENT_QUERY = graphql(/* GraphQL */ `
@@ -25,12 +26,13 @@ const PATIENT_QUERY = graphql(/* GraphQL */ `
 const Patient: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useQuery(PATIENT_QUERY, {
+  const { data, loading } = useQuery(PATIENT_QUERY, {
     variables: { id: id as string },
   });
 
   return (
     <>
+      {loading && <Loading />}
       {data?.patient && (
         <>
           <Heading pb={10}>

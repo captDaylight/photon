@@ -1,4 +1,5 @@
 import { Flex, Heading, Text } from '@chakra-ui/react';
+import Link from 'next/link';
 
 const Header = () => {
   return (
@@ -12,8 +13,12 @@ const Header = () => {
       borderColor="gray.200"
       bg="white"
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/img/logotype.svg" alt="photon logo" width={100} />
+      <Link href="/">
+        <a>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/img/logotype.svg" alt="photon logo" width={100} />
+        </a>
+      </Link>
     </Flex>
   );
 };
