@@ -13,8 +13,9 @@ import {
 } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
+import RedTable from '../../src/components/RedTable';
 
-const PATIENT_QUERY = graphql(/* GraphQL */ `
+const PATIENTS_QUERY = graphql(/* GraphQL */ `
   query Patients {
     patients {
       id
@@ -25,45 +26,31 @@ const PATIENT_QUERY = graphql(/* GraphQL */ `
 `);
 
 const Home: NextPage = () => {
-  const { data, loading, error } = useQuery(PATIENT_QUERY);
+  const { data } = useQuery(PATIENTS_QUERY);
 
   return (
     <>
       <Heading pb={10}>Provider Portal</Heading>
-      <TableContainer>
-        <Table
-          size="md"
-          variant="simple"
-          backgroundColor="red.50"
-          colorScheme="red"
-        >
-          <Thead>
-            <Tr>
-              <Th color="red.600">First Name</Th>
-              <Th color="red.600">Last Name</Th>
-              <Th color="red.600">Identifier</Th>
-              <Th color="red.600"></Th>
+      <Heading size="md" pb={4}>
+        Patients
+      </Heading>
+      <RedTable headers={['First Name', 'Last Name', 'Identifier', '']}>
+        {data &&
+          data.patients.map((patient) => (
+            <Tr key={patient.id}>
+              <Td>{patient.firstName}</Td>
+              <Td>{patient.lastName}</Td>
+              <Td>{patient.id}</Td>
+              <Td>
+                <Link href={`/patient/${patient.id}`}>
+                  <a>
+                    <ExternalLinkIcon />
+                  </a>
+                </Link>
+              </Td>
             </Tr>
-          </Thead>
-          <Tbody>
-            {data &&
-              data.patients.map((patient) => (
-                <Tr key={patient.id}>
-                  <Td>{patient.firstName}</Td>
-                  <Td>{patient.lastName}</Td>
-                  <Td>{patient.id}</Td>
-                  <Td>
-                    <Link href={`/patient/${patient.id}`}>
-                      <a>
-                        <ExternalLinkIcon />
-                      </a>
-                    </Link>
-                  </Td>
-                </Tr>
-              ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+          ))}
+      </RedTable>
     </>
   );
 };

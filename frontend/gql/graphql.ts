@@ -87,6 +87,27 @@ export type QueryPrescriptionArgs = {
   id: Scalars['ID'];
 };
 
+export type PatientQueryQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type PatientQueryQuery = {
+  __typename?: 'Query';
+  patient?: {
+    __typename?: 'Patient';
+    id: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    prescriptions: Array<{
+      __typename?: 'Prescription';
+      id: string;
+      medication?: string | null;
+      dosage?: string | null;
+      status?: PrescriptionStatus | null;
+    }>;
+  } | null;
+};
+
 export type PatientsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type PatientsQuery = {
@@ -99,6 +120,79 @@ export type PatientsQuery = {
   }>;
 };
 
+export const PatientQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'PatientQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'patient' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'prescriptions' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'medication' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'dosage' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'status' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'medication' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PatientQueryQuery, PatientQueryQueryVariables>;
 export const PatientsDocument = {
   kind: 'Document',
   definitions: [
