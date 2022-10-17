@@ -32,6 +32,13 @@ const brandRing = {
 
 const theme = extendTheme(
   {
+    styles: {
+      global: {
+        body: {
+          color: 'blue.500',
+        },
+      },
+    },
     colors: {
       brand: {
         50: '#fef2f2',
