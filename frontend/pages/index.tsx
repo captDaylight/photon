@@ -7,12 +7,16 @@ const Home: NextPage = () => {
     <Flex justifyContent="center">
       <Link href="/provider">
         <a>
-          <Button mr={5}>Provider Portal</Button>
+          <Button colorScheme="red" size="lg" mr={5}>
+            Provider Portal
+          </Button>
         </a>
       </Link>
       <Link href="/pharmacist">
         <a>
-          <Button ml={5}>Pharmacist Portal</Button>
+          <Button colorScheme="red" size="lg" ml={5}>
+            Pharmacist Portal
+          </Button>
         </a>
       </Link>
     </Flex>
