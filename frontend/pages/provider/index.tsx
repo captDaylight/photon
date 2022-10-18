@@ -46,9 +46,7 @@ const Home: NextPage = () => {
   const btnRef = useRef(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [createPatient, { data: newPatient }] = useMutation(
-    CREATE_PATIENT_MUTATION
-  );
+  const [createPatient] = useMutation(CREATE_PATIENT_MUTATION);
 
   const handleSubmit = useCallback(
     (e: SyntheticEvent) => {
