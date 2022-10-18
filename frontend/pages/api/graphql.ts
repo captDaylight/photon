@@ -1,4 +1,4 @@
-import { createServer, GraphQLYogaError } from '@graphql-yoga/node';
+import { createServer } from '@graphql-yoga/node';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 import { resolvers } from '../../src/resolvers';

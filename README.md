@@ -1,23 +1,23 @@
-# Takehome Assignment
-## Goal
-Create a React frontend powered by the given Node.js backend that allows users to view, create, and update patients and prescriptions. There are two groups of users that will interact with this tool, as outlined below:
+# Photon
 
-**Provider**
+The application is written with Next.js and Apollo client. I used a serverless route to serve as a graphql gateway between the backend with GraphQL Yoga. Types for the queries, mutations, schema, and resolvers are generated and provide typesafe code throughout the frontend.
 
-As a provider, I should be able to create new patients and write prescriptions for these patients. I would also like to see my other patients and the status of their previously written prescriptions
+## Running the code
 
-**Pharmacist**
+First, in one tab run the backend. This will also initialize some mock data.
 
-As a pharmacist, I should be able to see all prescriptions and move them through the different states (pending, in progress, and filled).
+```
+cd backend
+yarn
+yarn start
+```
 
-### Requirements
+And in another tab run the frontend
 
-- This front end should make use of the [Chakra UI library](https://chakra-ui.com/) for design and components
-- Both users, Providers and Pharmacists, should be able to complete their respective actions outlined above in this front end
+```
+cd frontend
+yarn
+yarn dev
+```
 
-### Backend Guide
-In order to run the backend, you must follow these steps:
-
-1. [Ensure npm and node.js are installed](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-2. Once installed, run `npm install` within the backend directory to install the required dependencies
-3. Afterwards, run `npm run start` and the backend server should be reachable at [localhost:3000](http://localhost:3000)
+Now access the graphql playground and schema are at `http://localhost:3000/api/graphql`. You can navigate through the provider and pharmacist portals at `http://localhost:3000/`.
