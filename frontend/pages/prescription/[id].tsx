@@ -34,7 +34,6 @@ const Patient: NextPage = () => {
   return (
     <>
       {loading && <Loading />}
-
       {data?.prescription && (
         <>
           <Heading pb={10}>
