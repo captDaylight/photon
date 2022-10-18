@@ -1,6 +1,6 @@
 # Photon
 
-The application is written with Next.js and Apollo client. I used a serverless route as a graphql gateway between the backend with GraphQL Yoga at `. Types for the queries, mutations, schema, and resolvers are generated and provide typesafe code throughout the frontend.
+The application is written with Next.js and Apollo client. I used a serverless route as a graphql gateway between the backend with GraphQL Yoga. Types for the queries, mutations, schema, and resolvers are generated and provide typesafe code throughout the frontend.
 
 ## Running the code
 
