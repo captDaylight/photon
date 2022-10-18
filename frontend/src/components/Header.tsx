@@ -1,4 +1,4 @@
-import { Flex, Heading, Text } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import Link from 'next/link';
 
 const Header = () => {
@@ -12,6 +12,7 @@ const Header = () => {
       border="1px"
       borderColor="gray.200"
       bg="white"
+      zIndex={1}
     >
       <Link href="/">
         <a>
